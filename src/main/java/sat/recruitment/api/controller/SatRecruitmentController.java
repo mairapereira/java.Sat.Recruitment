@@ -1,7 +1,6 @@
 package sat.recruitment.api.controller;
 
 import java.io.BufferedReader;
-import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -15,16 +14,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import sat.recruitment.api.controllers.dtos.UserDto;
 
 @RestController
 @RequestMapping(value = "/api/v1")
 public class SatRecruitmentController {
 
-	private List<User> users = new ArrayList<User>();
+	private List<UserDto> users = new ArrayList<UserDto>();
 
 	@PostMapping(value = "/create-user", consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void createUser(@RequestBody User messageBody) {
+	public void createUser(@RequestBody UserDto messageBody) {
 		String errors = "";
 
 		validateErrors(messageBody.getName(), messageBody.getEmail(), messageBody.getAddress(), messageBody.getPhone(),
@@ -34,7 +34,7 @@ public class SatRecruitmentController {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, errors);
 		}
 
-		User newUser = new User();
+		UserDto newUser = new UserDto();
 		newUser.setName(messageBody.getName());
 		newUser.setEmail(messageBody.getEmail());
 		newUser.setAddress(messageBody.getAddress());
@@ -71,34 +71,9 @@ public class SatRecruitmentController {
 			}
 		}
 
-		InputStream fstream;
-		try {
-			fstream = getClass().getResourceAsStream("/users.txt");
-
-			BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
-
-			String strLine;
-
-			while ((strLine = br.readLine()) != null) {
-				String[] line = strLine.split(",");
-				User user = new User();
-				user.setName(line[0]);
-				user.setEmail(line[1]);
-				user.setPhone(line[2]);
-				user.setAddress(line[3]);
-				user.setUserType(line[4]);
-				user.setMoney(Double.valueOf(line[5]));
-				users.add(user);
-
-			}
-			fstream.close();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
+//obtener user
 		Boolean isDuplicated = false;
-		for (User user : users) {
+		for (UserDto user : users) {
 
 			if (user.getEmail().equals(newUser.getEmail()) || user.getPhone().equals(newUser.getPhone())) {
 				isDuplicated = true;
