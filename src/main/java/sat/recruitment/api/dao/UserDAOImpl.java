@@ -1,5 +1,7 @@
 package sat.recruitment.api.dao;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
@@ -10,22 +12,22 @@ import sat.recruitment.api.services.domain.User;
 import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 @Repository
 @Slf4j
+@AllArgsConstructor
 public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public List<User> findAll() {
 		List<User> users = new ArrayList<>();
 
-		Path filePath = Paths.get("users.txt");
+		URL url = this.getClass().getClassLoader().getResource("users.txt");
 
-		try (Stream<String> lines = Files.lines(filePath)){
+		try (Stream<String> lines = Files.lines(Path.of(url.toURI()))){
 			users = lines
 					.map(line -> line.split(","))
 					.map(UserDomainMapper::lineToUser)
