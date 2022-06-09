@@ -27,36 +27,7 @@ public class UserServiceImpl implements UserService {
 		if (usersFound!=null && !usersFound.isEmpty()) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is duplicated");
 		}
-
-		if (newUser.getUserType().equals("Normal")) {
-			if (Double.valueOf(newUser.getMoney()) > 100) {
-				Double percentage = Double.valueOf("0.12");
-				// If new user is normal and has more than USD100
-				var gif = Double.valueOf(newUser.getMoney()) * percentage;
-				newUser.setMoney(newUser.getMoney() + gif);
-			}
-			if (Double.valueOf(newUser.getMoney()) < 100) {
-				if (Double.valueOf(newUser.getMoney()) > 10) {
-					var percentage = Double.valueOf("0.8");
-					var gif = Double.valueOf(newUser.getMoney()) * percentage;
-					newUser.setMoney(newUser.getMoney() + gif);
-				}
-			}
-		}
-		if (newUser.getUserType().equals("SuperUser")) {
-			if (Double.valueOf(newUser.getMoney()) > 100) {
-				Double percentage = Double.valueOf("0.20");
-				Double gif = Double.valueOf(newUser.getMoney()) * percentage;
-				newUser.setMoney(newUser.getMoney() + gif);
-			}
-		}
-		if (newUser.getUserType().equals("Premium")) {
-			if (Double.valueOf(newUser.getMoney()) > 100) {
-				Double gif = Double.valueOf(newUser.getMoney()) * 2;
-				newUser.setMoney(newUser.getMoney() + gif);
-			}
-		}
-
+		newUser.chargeGift();
 		userDAO.createuser(newUser);
 	}
 

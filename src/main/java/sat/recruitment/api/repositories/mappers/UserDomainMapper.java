@@ -1,6 +1,7 @@
 package sat.recruitment.api.repositories.mappers;
 
 import lombok.experimental.UtilityClass;
+import sat.recruitment.api.services.factory.UserFactory;
 import sat.recruitment.api.services.domain.User;
 import sat.recruitment.api.services.domain.UserType;
 
@@ -8,14 +9,14 @@ import sat.recruitment.api.services.domain.UserType;
 public class UserDomainMapper {
     public static final String LINE_SEPARATOR =",";
     public static User lineToUser(String[] line) {
-        return User.builder()
-                .name(line[0])
-                .email(line[1])
-                .phone(line[2])
-                .address(line[3])
-                .userType(UserType.getFromCode(line[4]))
-                .money(Double.valueOf(line[5]))
-                .build();
+        User user = UserFactory.createUser(line[4]);
+        user.setName(line[0]);
+        user.setEmail(line[1]);
+        user.setPhone(line[2]);
+        user.setAddress(line[3]);
+        user.setUserType(UserType.getFromCode(line[4]));
+        user.setMoney(Double.valueOf(line[5]));
+        return user;
     }
 
     public static String userToLine(User user){
