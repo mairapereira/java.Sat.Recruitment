@@ -1,11 +1,10 @@
 package sat.recruitment.api.services;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
-import sat.recruitment.api.dao.UserDAO;
+import sat.recruitment.api.repositories.UserDAO;
 import sat.recruitment.api.services.domain.User;
 
 import static sat.recruitment.api.services.validations.UserValidator.validateErrors;
@@ -57,6 +56,8 @@ public class UserServiceImpl implements UserService {
 				newUser.setMoney(newUser.getMoney() + gif);
 			}
 		}
+
+		userDAO.createuser(newUser);
 	}
 
 }
