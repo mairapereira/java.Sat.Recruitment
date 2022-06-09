@@ -1,7 +1,7 @@
 package sat.recruitment.api.services.factory;
 
-import org.springframework.stereotype.Component;
 import sat.recruitment.api.services.domain.*;
+import sat.recruitment.api.services.domain.constants.UserType;
 
 public class UserFactory {
 

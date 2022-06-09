@@ -1,4 +1,4 @@
-package sat.recruitment.api.services.domain;
+package sat.recruitment.api.services.domain.constants;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

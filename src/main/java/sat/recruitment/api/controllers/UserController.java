@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import sat.recruitment.api.controllers.dtos.UserDto;
 import sat.recruitment.api.controllers.mappers.UserMapper;
 import sat.recruitment.api.services.UserService;
+import sat.recruitment.api.services.domain.User;
 
 @RestController
 @RequestMapping(value = "/api/v1/users")
@@ -17,7 +18,7 @@ public class UserController {
 
 	@PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(value = HttpStatus.CREATED)
-	public void createUser(@RequestBody UserDto user) {
-		userService.createUser(UserMapper.INSTANCE.toDomain(user));
+	public User createUser(@RequestBody UserDto user) {
+		return userService.createUser(UserMapper.INSTANCE.toDomain(user));
 	}
 }

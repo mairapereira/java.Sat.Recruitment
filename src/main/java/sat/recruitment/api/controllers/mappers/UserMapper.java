@@ -7,7 +7,7 @@ import org.mapstruct.factory.Mappers;
 import sat.recruitment.api.controllers.dtos.UserDto;
 import sat.recruitment.api.services.factory.UserFactory;
 import sat.recruitment.api.services.domain.User;
-import sat.recruitment.api.services.domain.UserType;
+import sat.recruitment.api.services.domain.constants.UserType;
 
 
 @Mapper

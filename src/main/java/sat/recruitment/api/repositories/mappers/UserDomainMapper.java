@@ -3,7 +3,7 @@ package sat.recruitment.api.repositories.mappers;
 import lombok.experimental.UtilityClass;
 import sat.recruitment.api.services.factory.UserFactory;
 import sat.recruitment.api.services.domain.User;
-import sat.recruitment.api.services.domain.UserType;
+import sat.recruitment.api.services.domain.constants.UserType;
 
 @UtilityClass
 public class UserDomainMapper {

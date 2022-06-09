@@ -77,7 +77,8 @@ public class UserDAOImpl implements UserDAO {
             writer.newLine();
             writer.write(line);
         } catch (IOException e) {
-            System.err.println(e);
+            log.error("Ocurrió un error al leer el archivo", e);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "A error ocurred when write user to file");
         } catch (URISyntaxException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "A error ocurred when write user to file");
         }

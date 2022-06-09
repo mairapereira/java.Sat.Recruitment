@@ -1,10 +1,9 @@
 package sat.recruitment.api.services.domain;
 
-import lombok.Builder;
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import sat.recruitment.api.services.domain.constants.UserType;
 
 @Getter
 @Setter

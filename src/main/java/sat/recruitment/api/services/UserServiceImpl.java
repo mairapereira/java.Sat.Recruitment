@@ -7,6 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import sat.recruitment.api.repositories.UserDAO;
 import sat.recruitment.api.services.domain.User;
 
+import static sat.recruitment.api.services.domain.constants.Errors.USER_DUPLICATE;
 import static sat.recruitment.api.services.validations.UserValidator.validateErrors;
 
 @Service
@@ -15,7 +16,7 @@ public class UserServiceImpl implements UserService {
 
 	private UserDAO userDAO;
 
-	public void createUser(User newUser) {
+	public User createUser(User newUser) {
 		String errors = validateErrors(newUser.getName(), newUser.getEmail(), newUser.getAddress(), newUser.getPhone());
 
 		if (errors != null && errors != "") {
@@ -25,10 +26,10 @@ public class UserServiceImpl implements UserService {
 		var usersFound = userDAO.findUsersBy(newUser.getEmail(), newUser.getPhone(), newUser.getName(), newUser.getAddress());
 
 		if (usersFound!=null && !usersFound.isEmpty()) {
-			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "User is duplicated");
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, USER_DUPLICATE.getDescription());
 		}
 		newUser.chargeGift();
-		userDAO.createuser(newUser);
+		return userDAO.createuser(newUser);
 	}
 
 }
